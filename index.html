@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoboCraft Club — Robotics Special Interest Group at PolyU</title>
+  <meta name="description" content="RoboCraft Club — a hands-on robotics special interest group at The Hong Kong Polytechnic University. Open to all PolyU students and staff." />
+  <link rel="canonical" href="https://robocraftclub.github.io/" />
+  <meta property="og:title" content="RoboCraft Club — Robotics at PolyU" />
+  <meta property="og:description" content="Build and play with robots. A hands-on special interest group at The Hong Kong Polytechnic University." />
+  <meta property="og:url" content="https://robocraftclub.github.io/" />
+  <meta property="og:image" content="https://robocraftclub.github.io/png_files/robot_humanoid1.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f7f6f3;
+      --card: #ffffff;
+      --ink: #1a1d23;
+      --muted: #40464f;
+      --red: #a6192e;
+      --red-dark: #871425;
+      --line: #e4e2dc;
+      --radius: 14px;
+      --display: "Space Grotesk", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 246, 243, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand img { height: 68px; width: auto; }
+
+    .brand-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      margin-top: 14px;
+    }
+
+    .brand-name em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 15px;
+    }
+
+    .nav-links a:not(.btn) {
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    .nav-links a:not(.btn):hover { color: var(--ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-red:hover { background: var(--red-dark); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .nav .btn { padding: 8px 16px; font-size: 14px; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      padding-top: 72px;
+      padding-bottom: 64px;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin: 0 0 18px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(38px, 5.5vw, 58px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    /* ---------- Figure panel (signature) ---------- */
+    .fig-panel {
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px),
+        var(--card);
+      background-size: 28px 28px, 28px 28px, auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .fig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    figure.fig {
+      margin: 0;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    figure.fig:hover { border-color: var(--red); }
+
+    .fig-img {
+      aspect-ratio: 3 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .fig-img img {
+      max-height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    figcaption {
+      border-top: 1px solid var(--line);
+      padding: 8px 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .fig-panel-foot {
+      margin: 16px 4px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    /* ---------- Sections ---------- */
+    section.wrap { padding-top: 56px; padding-bottom: 56px; }
+
+    .section-head { margin-bottom: 36px; }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(26px, 3.4vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 56ch;
+      margin: 12px 0 0;
+    }
+
+    /* Gallery continues the figure system */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* ---------- Why join ---------- */
+    .why {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .why-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .why-item h3 {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 6px;
+    }
+
+    .why-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* ---------- Events ---------- */
+    .events {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .event {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .event-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .event h3 {
+      font-family: var(--display);
+      font-size: 19px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .event p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .card-link {
+      margin-top: auto;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    .card-link:hover { text-decoration: underline; }
+
+    .card-link + .card-link { margin-top: 0; }
+
+    /* ---------- Join ---------- */
+    .join-card {
+      background: var(--ink);
+      color: #f4f3f0;
+      border-radius: calc(var(--radius) + 4px);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .join-card .eyebrow { color: #e8a0ab; }
+
+    .join-card h2 { color: #fff; }
+
+    .join-card p {
+      color: #b9bcc4;
+      max-width: 40ch;
+      margin: 12px 0 0;
+    }
+
+    .qr-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .qr-card {
+      display: block;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .qr-card:hover span { color: var(--red); }
+
+    .qr-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+    }
+
+    .qr-card span {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+      padding: 28px 0 40px;
+    }
+
+    .foot-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .foot-inner a { color: var(--muted); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding-top: 48px;
+        padding-bottom: 40px;
+      }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .events { grid-template-columns: 1fr; }
+      .join-card {
+        grid-template-columns: 1fr;
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links a:not(.btn) { display: none; }
+      .brand img { height: 44px; }
+      .brand { gap: 10px; }
+      .brand-name { margin-top: 8px; white-space: nowrap; font-size: 17px; }
+      .eyebrow { font-size: 13px; }
+      .why { grid-template-columns: 1fr; }
+      .fig-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .fig-panel { padding: 12px; }
+      figcaption { font-size: 10px; padding: 6px 8px; }
+      .qr-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="RoboCraft Club home">
+        <img src="png_files/polyu_logo.png" alt="The Hong Kong Polytechnic University" />
+        <span class="brand-name">Robo<em>Craft</em> Club</span>
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#robots">Robots</a>
+        <a href="#events">Events</a>
+        <a href="#join" class="btn btn-red">Join us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">PolyU Special Interest Group · All welcome</p>
+        <h1>Build &amp; play with&nbsp;robots.</h1>
+        <div class="hero-ctas">
+          <a class="btn btn-red" href="#join">Scan to join</a>
+          <a class="btn btn-ghost" href="https://www.polyu.edu.hk/ic/people/engineering-staff/xijunsun/" target="_blank" rel="noopener">Contact us</a>
+        </div>
+        <p class="hero-note">Open to all PolyU students &amp; staff.</p>
+      </div>
+
+      <div class="fig-panel" aria-label="Robots built by club members">
+        <div class="fig-grid">
+          <figure class="fig">
+            <div class="fig-img"><img src="png_files/spider_bot.jpg" alt="3D-printed spider robot" /></div>
+            <figcaption>Spider bot · 3D-printed legs</figcaption>
+          </figure>
+          <figure class="fig">
+            <div class="fig-img"><img src="png_files/robot_arm.png" alt="Robot arm" /></div>
+            <figcaption>Robot arm · 6-axis</figcaption>
+          </figure>
+          <figure class="fig">
+            <div class="fig-img"><img src="png_files/robot_humanoid1.png" alt="Humanoid robot" /></div>
+            <figcaption>Humanoid · dance &amp; boxing</figcaption>
+          </figure>
+        </div>
+        <div class="fig-panel-foot">
+          <span>Made by RoboCraft members</span>
+          <span>IR / Wi-Fi / Bluetooth</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who we are -->
+    <section id="about" class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Who we are</p>
+        <h2>A special interest group backed by the Industrial Centre</h2>
+        <p>
+          RoboCraft Club is a PolyU special interest group supported by the
+          Industrial Centre. We run project spaces and a fleet of robots —
+          Universal Robots arms, drones, autonomous cars, robotic hands,
+          3D-printed humanoids and more.
+        </p>
+      </div>
+      <div class="events">
+        <div class="event">
+          <span class="event-tag">Facilities</span>
+          <h3>Book robots &amp; spaces</h3>
+          <p>PolyU students and staff can book our robots and project spaces — rooms W305 and W402 — for their own work.</p>
+          <a class="card-link" href="https://www.polyu.edu.hk/ic/research-and-project-support/list-of-facilities/" target="_blank" rel="noopener">Book a robot →</a>
+          <a class="card-link" href="https://www.polyu.edu.hk/ic/research-and-project-support/list-of-project-bases/" target="_blank" rel="noopener">Book a project space →</a>
+        </div>
+        <div class="event">
+          <span class="event-tag">Workshops</span>
+          <h3>DIY workshops</h3>
+          <p>We run hands-on DIY workshops through the year. Interested students are welcome to come and build with us — no experience needed.</p>
+          <a class="card-link" href="https://www.clubmakepolyu.org/activities" target="_blank" rel="noopener">See what's on &amp; join →</a>
+        </div>
+        <div class="event">
+          <span class="event-tag">Projects</span>
+          <h3>Student project support</h3>
+          <p>Working on a research or entrepreneurship project? Approach us for support with equipment, space and know-how.</p>
+          <a class="card-link" href="https://www.polyu.edu.hk/ic/people/engineering-staff/xijunsun/" target="_blank" rel="noopener">Contact a staff →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Robots gallery -->
+    <section id="robots" class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">In the workshop</p>
+        <h2>What members are building</h2>
+        <p>Every robot here started as a sketch, a spool of filament and a bag of servos. Members design, print, wire and code them in the club.</p>
+      </div>
+      <div class="gallery">
+        <figure class="fig">
+          <div class="fig-img"><img src="png_files/robot_hand.png" alt="Robotic hand" /></div>
+          <figcaption>Robot hand · gesture control</figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-img"><img src="png_files/robot_humanoid2.png" alt="Humanoid robot" /></div>
+          <figcaption>Humanoid · push-ups</figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-img"><img src="png_files/car.png" alt="Robot car" /></div>
+          <figcaption>Smart car · line following</figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-img"><img src="png_files/drone.png" alt="Drone" /></div>
+          <figcaption>Drone · flight control</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Why join -->
+    <section class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Why join</p>
+        <h2>Learn by building, not by exams</h2>
+      </div>
+      <div class="why">
+        <div class="why-item">
+          <h3>Hands-on first</h3>
+          <p>Plug in a robot, run a demo, then hack it. You work with real hardware from day one.</p>
+        </div>
+        <div class="why-item">
+          <h3>Coding, electronics &amp; AI</h3>
+          <p>Pick up practical skills project by project — firmware, CAD, sensors, machine learning.</p>
+        </div>
+        <div class="why-item">
+          <h3>Find your crew</h3>
+          <p>Team up with students and staff who also love robots, from beginners to competition veterans.</p>
+        </div>
+        <div class="why-item">
+          <h3>Everyone's welcome</h3>
+          <p>No entry bar — you don't need to know coding or mechanics. Students and staff from every department can join.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section id="events" class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What's on</p>
+        <h2>Club events</h2>
+      </div>
+      <div class="events">
+        <div class="event">
+          <span class="event-tag">Workshop</span>
+          <h3>Robot building sessions</h3>
+          <p>Assemble and program your own robot from scratch. Beginner-friendly, all materials provided.</p>
+        </div>
+        <div class="event">
+          <span class="event-tag">Competition</span>
+          <h3>Competition support</h3>
+          <p>Entering a robotics competition? Build your own team, and we'll back you with robots, space and advice.</p>
+        </div>
+        <div class="event">
+          <span class="event-tag">Sharing</span>
+          <h3>Sharing sessions</h3>
+          <p>Members share what they've been exploring — an exhibition visit, a new build, whatever's moving in robotics.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join -->
+    <section id="join" class="wrap">
+      <div class="join-card">
+        <div>
+          <p class="eyebrow">Join RoboCraft</p>
+          <h2>Scan with your PolyU account</h2>
+          <p>Scan — or tap — the QR code that matches your role. Sign-up takes under a minute.</p>
+        </div>
+        <div class="qr-row">
+          <a class="qr-card" href="https://forms.office.com/pages/responsepage.aspx?id=1-QJ7A89_06cHnuoBgxUF8-xsgmAUoVOuQeYoLDmUMtUNjFKWVNUTlgwWjRFWEdIQU9MMjFOVlVJQi4u" target="_blank" rel="noopener">
+            <img src="png_files/qr_student.png" alt="QR code for student sign-up" />
+            <span>Student</span>
+          </a>
+          <a class="qr-card" href="https://forms.office.com/pages/responsepage.aspx?id=YPc3j4exgUm4L-Xcb1vPROMVQX_rXW5Kq2v6IDIWBcBUNVYxOElGWU5FRTBNM1lEVkRWNlRCM1NQMy4u" target="_blank" rel="noopener">
+            <img src="png_files/qr_staff.png" alt="QR code for staff sign-up" />
+            <span>Staff</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>Robots designed and made by RoboCraft members · The Hong Kong Polytechnic University</span>
+      <img src="png_files/clubmake_logo.png" alt="ClubMake" height="26" style="height:26px;width:auto;" />
+    </div>
+  </footer>
+
+</body>
+</html>
